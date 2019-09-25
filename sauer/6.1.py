@@ -5,9 +5,9 @@ from matplotlib import pyplot as plt
 
 def euler(f, y_0, start, stop, step):
     w_i = y_0
-    w = []
+    w = [w_i]
     t = np.arange(start, stop+step, step)  # include endpoint, therefore add step
-    for t_i in t:
+    for t_i in t[:-1]:
         w_i += step*f(t_i, w_i)
         w.append(w_i)
         
