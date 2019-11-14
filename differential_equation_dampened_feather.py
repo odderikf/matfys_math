@@ -26,16 +26,17 @@ h = 0.1
 ts = []
 ws = []
 n = 200
+T = 1e-6
 gs = np.linspace(0, 3, n)
 for g in gs:
 
-    t, w = RK45.RK45(dydt, y0, a, b, h, 1e-8)
+    t, w = RK45.RK45(dydt, y0, a, b, h, T)
     ts.append(t)
     w = np.array(w)
     ws.append(w[:, 1])
 
 g = np.sqrt(4*m*k)
-t_crit, w_crit = RK45.RK45(dydt, y0, a, b, h, 1e-6)
+t_crit, w_crit = RK45.RK45(dydt, y0, a, b, h, T)
 w_crit = np.array(w_crit)[:, 1]
 
 rootparts = [1 - 4*m*k / e**2 for e in gs ]
@@ -57,9 +58,11 @@ for i in range(n):
 
 plt.plot(t_crit, w_crit, c=(0, 1, 0), lw=1.2)
 plt.grid(True)
-red_patch = mpatches.Patch(color=(1,0,0), label='Dampened oscillation, two complex roots')
-green_patch = mpatches.Patch(color=(0,1,0), label='Critical dampening, one real root')
-blue_patch = mpatches.Patch(color=(0,0,1), label='Overdampening, two real roots')
+params = {'legend.fontsize': 7}
+plt.rcParams.update(params)
+
+red_patch = mpatches.Patch(color=(1,0,0), label='Dampened oscillation')
+green_patch = mpatches.Patch(color=(0,1,0), label='Critical dampening')
+blue_patch = mpatches.Patch(color=(0,0,1), label='Overdampening')
 plt.legend(handles=[red_patch, green_patch, blue_patch])
-plt.show()
 plt.savefig('tight.png', dpi=300)
