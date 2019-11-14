@@ -34,11 +34,11 @@ for g in gs:
     w = np.array(w)
     ws.append(w[:, 1])
 
-g = np.sqrt(4*m*k)  # todo check
+g = np.sqrt(4*m*k)
 t_crit, w_crit = RK45.RK45(dydt, y0, a, b, h, 1e-6)
 w_crit = np.array(w_crit)[:, 1]
 
-rootparts = [1 - 4*m*k / e**2 for e in gs ]  # todo check
+rootparts = [1 - 4*m*k / e**2 for e in gs ]
 num_neg_roots = len([e for e in rootparts if e < 0])
 
 red_cs = [(1-i, 0.5*i, 0, 0.6) for i in np.linspace(0, 1, num_neg_roots)]
